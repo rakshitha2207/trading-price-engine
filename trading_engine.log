@@ -1,0 +1,466 @@
+2025-03-25 19:22:35,222 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:22:35,223 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:22:35,223 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:22:35,224 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:22:35,224 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:22:35,225 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:22:35,225 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:22:35,227 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:22:36,381 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:22:36,381 - websocket - WARNING - websocket connected
+2025-03-25 19:22:36,490 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:22:36,490 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:22:36,491 - websocket - WARNING - websocket connected
+2025-03-25 19:22:58,532 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:22:58,681 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 19:22:58,682 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 19:22:58,909 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:22:58,910 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:22:58,910 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:22:58,911 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:22:58,911 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:22:58,939 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 19:26:35,524 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:26:35,525 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:26:35,525 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:26:35,530 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:26:35,531 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:26:35,532 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:26:35,532 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:26:35,534 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:26:36,728 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:26:36,729 - websocket - WARNING - websocket connected
+2025-03-25 19:26:36,928 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:26:36,929 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:26:36,930 - websocket - WARNING - websocket connected
+2025-03-25 19:27:27,001 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:27:27,309 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:27:27,309 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:27:27,419 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:27:27,419 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:27:27,420 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:27:55,600 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:27:55,601 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:27:55,601 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:27:55,602 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:27:55,602 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:27:55,603 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:27:55,604 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:27:55,604 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:27:56,492 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:27:56,493 - websocket - WARNING - websocket connected
+2025-03-25 19:27:57,084 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:27:57,084 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:27:57,084 - websocket - WARNING - websocket connected
+2025-03-25 19:28:03,937 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:28:04,075 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 19:28:04,075 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 19:28:04,284 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:28:04,284 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:28:04,284 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:28:04,285 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:28:04,285 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:31:15,981 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:31:15,981 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:31:15,981 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:31:15,982 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:31:15,983 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:31:15,983 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:31:15,984 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:31:15,985 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:31:16,839 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:31:16,840 - websocket - WARNING - websocket connected
+2025-03-25 19:31:17,144 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:31:17,144 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:31:17,145 - websocket - WARNING - websocket connected
+2025-03-25 19:31:25,027 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:31:25,192 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 19:31:25,193 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 19:31:25,405 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:31:25,407 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:31:25,410 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:31:25,411 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:31:25,412 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:33:32,055 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:33:32,055 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:33:32,056 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:33:32,056 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:33:32,057 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:33:32,058 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:33:32,058 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:33:32,059 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:33:33,296 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:33:33,297 - websocket - WARNING - websocket connected
+2025-03-25 19:33:33,605 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:33:33,605 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:33:33,607 - websocket - WARNING - websocket connected
+2025-03-25 19:33:39,053 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:33:39,157 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 19:33:39,158 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 19:33:39,471 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:33:39,471 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:33:39,472 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:33:39,472 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:33:39,472 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:33:39,495 - CryptoTradingEngine - ERROR - Error writing to final CSV file data/final_weighted_avg.csv: Invalid comparison between dtype=datetime64[ns] and Timestamp
+2025-03-25 19:38:24,587 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:38:24,587 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:38:24,587 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:38:24,588 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:38:24,588 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:38:24,591 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:38:24,592 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:38:24,592 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:38:25,659 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:38:25,662 - websocket - WARNING - websocket connected
+2025-03-25 19:38:25,875 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:38:25,876 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:38:25,876 - websocket - WARNING - websocket connected
+2025-03-25 19:38:38,685 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:38:38,870 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 19:38:38,872 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 19:38:39,087 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:38:39,088 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:38:39,090 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:38:39,090 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:38:39,091 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:38:39,125 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 19:39:22,345 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:39:22,346 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:39:22,347 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:39:22,347 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:39:22,347 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:39:22,349 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:39:22,350 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:39:22,350 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:39:23,145 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:39:23,146 - websocket - WARNING - websocket connected
+2025-03-25 19:39:23,565 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:39:23,566 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:39:23,566 - websocket - WARNING - websocket connected
+2025-03-25 19:40:14,905 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:40:15,119 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 19:40:15,120 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 19:40:15,435 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:40:15,438 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:40:15,439 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:40:15,439 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:40:15,440 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:40:15,465 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 19:46:08,264 - CryptoTradingEngine - INFO - Fetching historical data for ETHUSDT from 2025-03-25 13:05:00 to 2025-03-25 13:06:00...
+2025-03-25 19:46:08,872 - CryptoTradingEngine - WARNING - No historical data fetched for Binance.
+2025-03-25 19:47:04,258 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:47:33,152 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:47:50,875 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:47:50,876 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:47:50,876 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:47:50,877 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:47:50,878 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:47:50,879 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:47:50,879 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:47:50,880 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:47:51,850 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:47:51,851 - websocket - WARNING - websocket connected
+2025-03-25 19:47:52,241 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:47:52,242 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:47:52,243 - websocket - WARNING - websocket connected
+2025-03-25 19:48:07,798 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:48:07,978 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 19:48:07,978 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 19:48:08,187 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:48:08,187 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:48:08,188 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:48:08,189 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:48:08,189 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:48:08,207 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 19:52:31,920 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:52:31,920 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:52:31,922 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:52:31,923 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:52:31,923 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:52:31,924 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:52:31,924 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:52:31,925 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:52:32,862 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:52:32,863 - websocket - WARNING - websocket connected
+2025-03-25 19:52:33,153 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:52:33,154 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:52:33,154 - websocket - WARNING - websocket connected
+2025-03-25 19:52:38,278 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:52:38,313 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 19:52:38,313 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 19:52:38,626 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:52:38,626 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:52:38,627 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:52:38,627 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:52:38,628 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:52:38,643 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 19:53:38,500 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 19:53:38,500 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 19:53:38,501 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 19:53:38,501 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 19:53:38,502 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 19:53:38,502 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 19:53:38,503 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 19:53:38,504 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 19:53:39,335 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 19:53:39,337 - websocket - WARNING - websocket connected
+2025-03-25 19:53:39,827 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 19:53:39,829 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 19:53:39,829 - websocket - WARNING - websocket connected
+2025-03-25 19:53:46,886 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 19:53:47,042 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 19:53:47,043 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 19:53:47,288 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 19:53:47,290 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 19:53:47,291 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 19:53:47,292 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 19:53:47,293 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 19:53:47,319 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 19:53:58,992 - CryptoTradingEngine - INFO - Fetching historical data for ETHUSDT from 2025-03-25 13:05:00 to 2025-03-25 13:06:00...
+2025-03-25 20:11:09,043 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 20:11:09,043 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 20:11:09,044 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 20:11:09,045 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 20:11:09,045 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:11:09,047 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:11:09,047 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:11:09,049 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:11:10,081 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:11:10,081 - websocket - WARNING - websocket connected
+2025-03-25 20:11:10,247 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:11:10,249 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:11:10,249 - websocket - WARNING - websocket connected
+2025-03-25 20:11:17,715 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:11:17,805 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:11:17,805 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:11:18,068 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:11:18,068 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:11:18,070 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:11:18,070 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:11:18,070 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:11:18,091 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:11:25,348 - HistoricalFetcher - INFO - Fetching historical data for ETHUSDT from 2025-03-25 13:05:00 to 2025-03-25 13:06:00...
+2025-03-25 20:11:25,920 - HistoricalFetcher - WARNING - No historical data fetched for Coinbase.
+2025-03-25 20:11:25,921 - HistoricalFetcher - WARNING - No historical data fetched for CoinGecko.
+2025-03-25 20:12:50,294 - HistoricalFetcher - INFO - Fetching historical data for ETHUSDT from 2025-03-25 13:05:00 to 2025-03-25 13:06:00...
+2025-03-25 20:12:53,270 - HistoricalFetcher - WARNING - No historical data fetched for Coinbase.
+2025-03-25 20:12:53,271 - HistoricalFetcher - WARNING - No historical data fetched for CoinGecko.
+2025-03-25 20:19:44,617 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 20:19:44,618 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:19:44,618 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:19:44,619 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:19:44,620 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:19:45,771 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:19:45,771 - websocket - WARNING - websocket connected
+2025-03-25 20:19:45,965 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:19:45,967 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:19:45,967 - websocket - WARNING - websocket connected
+2025-03-25 20:19:57,741 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:19:57,910 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:19:57,910 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:19:58,080 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:19:58,081 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:19:58,120 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:19:58,121 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:19:58,121 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:19:58,163 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:20:10,940 - HistoricalFetcher - INFO - Fetching historical data for ETHUSDT from 2025-03-25 13:05:00 to 2025-03-25 13:06:00...
+2025-03-25 20:20:11,579 - HistoricalFetcher - WARNING - No historical data fetched for Coinbase.
+2025-03-25 20:20:11,580 - HistoricalFetcher - WARNING - No historical data fetched for CoinGecko.
+2025-03-25 20:21:18,372 - HistoricalFetcher - INFO - Fetching historical data for ETHUSDT from 2024-03-25 13:05:00 to 2024-03-25 13:06:00...
+2025-03-25 20:21:19,169 - HistoricalFetcher - WARNING - No historical data fetched for Coinbase.
+2025-03-25 20:21:19,170 - HistoricalFetcher - WARNING - No historical data fetched for CoinGecko.
+2025-03-25 20:29:12,905 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 20:29:12,906 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 20:29:12,907 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 20:29:12,908 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 20:29:12,908 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:29:12,909 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:29:12,909 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:29:12,910 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:29:14,009 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:29:14,010 - websocket - WARNING - websocket connected
+2025-03-25 20:29:14,214 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:29:14,218 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:29:14,221 - websocket - WARNING - websocket connected
+2025-03-25 20:29:21,237 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:29:21,370 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:29:21,371 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:29:21,598 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:29:21,598 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:29:21,598 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:29:21,599 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:29:21,599 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:29:21,623 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:31:04,486 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 20:31:04,486 - CryptoTradingEngine - INFO - Starting real-time price tracking for BTCUSDT with sources: all...
+2025-03-25 20:31:04,487 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 20:31:04,489 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 20:31:04,489 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:31:04,489 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:31:04,490 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:31:04,491 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:31:05,628 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:31:05,629 - websocket - WARNING - websocket connected
+2025-03-25 20:31:05,730 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:31:05,732 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:31:05,733 - websocket - WARNING - websocket connected
+2025-03-25 20:31:19,019 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:31:19,133 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:31:19,134 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:31:19,401 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:31:19,402 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:31:19,402 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:31:19,404 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:31:19,404 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:31:19,430 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:31:30,137 - CryptoTradingEngine - INFO - Starting real-time price tracking for SOLUSDT with sources: all...
+2025-03-25 20:31:30,140 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:31:30,140 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:31:30,141 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:31:30,142 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:31:31,071 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:31:31,071 - websocket - WARNING - websocket connected
+2025-03-25 20:31:31,435 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:31:31,437 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:31:31,438 - websocket - WARNING - websocket connected
+2025-03-25 20:31:43,650 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:31:43,658 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:31:43,660 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:31:44,130 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:31:44,133 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:31:44,135 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:31:44,135 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:31:44,135 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:31:44,156 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:41:01,077 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 20:41:01,077 - CryptoTradingEngine - INFO - Starting real-time price tracking for BTCUSDT with sources: all...
+2025-03-25 20:41:01,078 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 20:41:01,079 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 20:41:01,080 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:41:01,081 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:41:01,082 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:41:01,083 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:41:02,149 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:41:02,150 - websocket - WARNING - websocket connected
+2025-03-25 20:41:02,648 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:41:02,649 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:41:02,649 - websocket - WARNING - websocket connected
+2025-03-25 20:41:05,285 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:41:05,422 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:41:05,423 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:41:05,634 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:41:05,635 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:41:05,636 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:41:05,637 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:41:05,638 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:41:05,685 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:43:33,245 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 20:43:33,245 - CryptoTradingEngine - INFO - Starting real-time price tracking for BTCUSDT with sources: all...
+2025-03-25 20:43:33,247 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 20:43:33,248 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 20:43:33,249 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:43:33,249 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:43:33,250 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:43:33,251 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:43:34,429 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:43:34,429 - websocket - WARNING - websocket connected
+2025-03-25 20:43:34,918 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:43:34,920 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:43:34,921 - websocket - WARNING - websocket connected
+2025-03-25 20:43:38,657 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:43:39,011 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:43:39,012 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:43:39,223 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:43:39,224 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:43:39,225 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:43:39,225 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:43:39,227 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:43:39,269 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:47:48,529 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 20:47:48,530 - CryptoTradingEngine - INFO - Starting real-time price tracking for BTCUSDT with sources: all...
+2025-03-25 20:47:48,530 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 20:47:48,531 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 20:47:48,531 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:47:48,532 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:47:48,532 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:47:48,533 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:47:49,170 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:47:49,170 - websocket - WARNING - websocket connected
+2025-03-25 20:47:49,685 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:47:49,685 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:47:49,686 - websocket - WARNING - websocket connected
+2025-03-25 20:47:59,013 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:47:59,218 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:47:59,218 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:47:59,430 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:47:59,430 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:47:59,431 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:47:59,431 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:47:59,431 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:47:59,448 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:47:59,449 - CryptoTradingEngine - INFO - Connected to SQLite database at crypto_prices.db
+2025-03-25 20:47:59,458 - CryptoTradingEngine - INFO - Table 'weighted_avg_prices' created or already exists.
+2025-03-25 20:47:59,459 - CryptoTradingEngine - INFO - Read 10 rows from data/final_weighted_avg.csv
+2025-03-25 20:47:59,467 - CryptoTradingEngine - INFO - Stored 10 rows in the database.
+2025-03-25 20:47:59,467 - CryptoTradingEngine - INFO - Database connection closed.
+2025-03-25 20:50:56,470 - CryptoTradingEngine - INFO - Starting real-time price tracking for BTCUSDT with sources: all...
+2025-03-25 20:50:56,471 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:50:56,472 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:50:56,472 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:50:56,474 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:50:57,251 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:50:57,252 - websocket - WARNING - websocket connected
+2025-03-25 20:50:57,567 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:50:57,568 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:50:57,568 - websocket - WARNING - websocket connected
+2025-03-25 20:50:58,969 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:50:59,167 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:50:59,168 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:50:59,324 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:50:59,327 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:50:59,376 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:50:59,376 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:50:59,377 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:50:59,418 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:50:59,419 - CryptoTradingEngine - INFO - Connected to SQLite database at crypto_prices.db
+2025-03-25 20:50:59,420 - CryptoTradingEngine - INFO - Table 'weighted_avg_prices' created or already exists.
+2025-03-25 20:50:59,422 - CryptoTradingEngine - INFO - Read 190 rows from data/final_weighted_avg.csv
+2025-03-25 20:50:59,434 - CryptoTradingEngine - INFO - Stored 190 rows in the database.
+2025-03-25 20:50:59,435 - CryptoTradingEngine - INFO - Database connection closed.
+2025-03-25 20:54:10,040 - CryptoTradingEngine - INFO - Initialized final CSV file: data/final_weighted_avg.csv
+2025-03-25 20:54:10,041 - CryptoTradingEngine - INFO - Starting real-time price tracking for ETHUSDT with sources: all...
+2025-03-25 20:54:10,042 - WebSocketClient - INFO - Initialized CSV file for Binance: data/binance_data.csv
+2025-03-25 20:54:10,044 - WebSocketClient - INFO - Initialized CSV file for Coinbase: data/coinbase_data.csv
+2025-03-25 20:54:10,046 - WebSocketClient - INFO - Initiated WebSocket connection for Binance
+2025-03-25 20:54:10,047 - WebSocketClient - INFO - Started WebSocket thread for Binance
+2025-03-25 20:54:10,049 - WebSocketClient - INFO - Initiated WebSocket connection for Coinbase
+2025-03-25 20:54:10,058 - WebSocketClient - INFO - Started WebSocket thread for Coinbase
+2025-03-25 20:54:10,717 - WebSocketClient - INFO - WebSocket opened for Binance
+2025-03-25 20:54:10,724 - websocket - WARNING - websocket connected
+2025-03-25 20:54:11,219 - WebSocketClient - INFO - WebSocket opened for Coinbase
+2025-03-25 20:54:11,219 - WebSocketClient - INFO - Sending Coinbase subscription: {'type': 'subscribe', 'product_ids': ['ETH-USD'], 'channels': ['matches']}
+2025-03-25 20:54:11,219 - websocket - WARNING - websocket connected
+2025-03-25 20:54:27,812 - CryptoTradingEngine - INFO - Stopping WebSocket connections...
+2025-03-25 20:54:28,028 - WebSocketClient - WARNING - WebSocket closed for Binance: None - None
+2025-03-25 20:54:28,030 - CryptoTradingEngine - WARNING - Disconnection detected for Binance. Data will be missing in CSV until reconnection.
+2025-03-25 20:54:28,237 - WebSocketClient - WARNING - WebSocket closed for Coinbase: None - None
+2025-03-25 20:54:28,238 - CryptoTradingEngine - WARNING - Disconnection detected for Coinbase. Data will be missing in CSV until reconnection.
+2025-03-25 20:54:28,238 - WebSocketClient - INFO - All WebSocket threads stopped.
+2025-03-25 20:54:28,240 - CryptoTradingEngine - INFO - Generating final weighted average CSV file...
+2025-03-25 20:54:28,240 - CryptoTradingEngine - INFO - Processing CSV files to calculate weighted averages per second...
+2025-03-25 20:54:28,262 - CryptoTradingEngine - INFO - Finished processing CSV files and writing to data/final_weighted_avg.csv.
+2025-03-25 20:54:28,264 - CryptoTradingEngine - INFO - Connected to SQLite database at crypto_prices.db
+2025-03-25 20:54:28,264 - CryptoTradingEngine - INFO - Table 'weighted_avg_prices' created or already exists.
+2025-03-25 20:54:28,265 - CryptoTradingEngine - INFO - Read 17 rows from data/final_weighted_avg.csv
+2025-03-25 20:54:28,273 - CryptoTradingEngine - INFO - Stored 17 rows in the database.
+2025-03-25 20:54:28,274 - CryptoTradingEngine - INFO - Database connection closed.
+2025-03-25 20:54:45,678 - CryptoTradingEngine - INFO - Querying weighted average prices from 2025-03-25 20:11:25 to 2025-03-25 20:11:30...
+2025-03-25 20:54:45,679 - CryptoTradingEngine - INFO - Connected to SQLite database at crypto_prices.db
+2025-03-25 20:54:45,682 - CryptoTradingEngine - INFO - Retrieved 0 rows from the database.
+2025-03-25 20:54:45,682 - CryptoTradingEngine - INFO - Database connection closed.
+2025-03-25 20:55:24,944 - CryptoTradingEngine - INFO - Querying weighted average prices from 2025-03-26 20:11:25 to 2025-03-26 20:11:30...
+2025-03-25 20:55:24,945 - CryptoTradingEngine - INFO - Connected to SQLite database at crypto_prices.db
+2025-03-25 20:55:24,948 - CryptoTradingEngine - INFO - Retrieved 0 rows from the database.
+2025-03-25 20:55:24,948 - CryptoTradingEngine - INFO - Database connection closed.

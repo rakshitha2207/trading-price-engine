@@ -1,15 +1,21 @@
 # src/price_engine/engine.py
-import sqlite3
-import pandas as pd
-import time
-from datetime import datetime, timedelta
-from typing import Dict, Optional
-import logging
+import sys
 import os
-from src.api_clients.binance_api import BinanceAPI
-from src.api_clients.coinbase_api import CoinbaseAPI
-from src.api_clients.coingecko_api import CoinGeckoAPI
-from src.database.db_manager import DatabaseManager
+
+# Add project_root to sys.path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+import time
+import logging
+import pandas as pd
+from datetime import datetime
+import csv
+import requests
+import sqlite3
+from src.api_clients.websocket_client import WebSocketClient
+import pytz
 
 # Set up logging
 logging.basicConfig(
@@ -23,259 +29,379 @@ logging.basicConfig(
 logger = logging.getLogger("CryptoTradingEngine")
 
 class PriceEngine:
-    def __init__(self, db_path: str):
-        self.binance = BinanceAPI()
-        self.coinbase = CoinbaseAPI()
-        self.coingecko = CoinGeckoAPI()
-        self.db = DatabaseManager(db_path)
-        self.sources = {
-            "Binance": (self.binance, 0.4),
-            "Coinbase": (self.coinbase, 0.3),
-            "CoinGecko": (self.coingecko, 0.3),
+    def __init__(self):
+        self.ws_client = None
+        self.csv_files = {
+            "Binance": "data/binance_data.csv",
+            "Coinbase": "data/coinbase_data.csv"
         }
-        self.last_fetch_time = None
+        self.final_csv = "data/final_weighted_avg.csv"
+        self.weights = {
+            "Binance": 0.6,
+            "Coinbase": 0.4,
+            "CoinGecko": 0.3  # Added weight for CoinGecko
+        }
+        self._initialize_final_csv()
 
-    def fetch_live_prices(self, symbol: str, fetch_time: Optional[datetime] = None) -> Dict[str, float]:
-        """Fetch live prices from all sources and save the weighted average to the database."""
-        prices = {}
-        for source_name, (api, _) in self.sources.items():
-            try:
-                price = api.get_price(symbol)
-                if price is not None:
-                    prices[source_name] = price
-            except Exception as e:
-                logger.error(f"Error fetching price from {source_name} for {symbol}: {e}")
+    def _initialize_final_csv(self):
+        """Initialize the final CSV file with headers if it doesn't exist."""
+        os.makedirs("data", exist_ok=True)
+        if not os.path.exists(self.final_csv):
+            with open(self.final_csv, mode='w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(["timestamp", "weighted_avg"])
+            logger.info(f"Initialized final CSV file: {self.final_csv}")
 
-        weighted_avg = self.calculate_weighted_average(prices)
-        if weighted_avg is not None:
-            save_time = fetch_time if fetch_time else datetime.now()
-            self.db.save_live_price(symbol, weighted_avg, save_time)
-            self.last_fetch_time = save_time
-            logger.info(f"Saved live price for {symbol} at {save_time}: {weighted_avg}")
+    def _fetch_coingecko_historical_trades(self, symbol, start_time, end_time):
+        """Fetch historical trades from CoinGecko for the given time range."""
+        try:
+            # Map symbol to CoinGecko ID (ETHUSDT -> Ethereum)
+            symbol_map = {
+                "ETHUSDT": "ethereum"
+            }
+            coin_id = symbol_map.get(symbol, None)
+            if not coin_id:
+                logger.error(f"Unsupported symbol for CoinGecko: {symbol}")
+                return []
 
-        return prices
+            # CoinGecko API expects timestamps in Unix seconds
+            start_time_unix = int(start_time.timestamp())
+            end_time_unix = int(end_time.timestamp())
 
-    def fetch_historical_prices(self, symbol: str, start_date: str, end_date: str) -> Dict[str, Dict[str, float]]:
-        """Fetch historical prices from all sources and save to database."""
-        historical_data = {}
-        for source_name, (api, _) in self.sources.items():
-            prices = api.get_historical_price(symbol, start_date, end_date)
-            if prices is not None:
-                historical_data[source_name] = prices
-                for date, price in prices.items():
-                    self.db.save_historical_price(symbol, source_name, date, price)
-        return historical_data
+            # CoinGecko historical data endpoint (daily granularity, we'll need to interpolate)
+            url = f"https://api.coingecko.com/api/v3/coins/{coin_id}/market_chart/range"
+            params = {
+                "vs_currency": "usd",
+                "from": start_time_unix,
+                "to": end_time_unix
+            }
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            data = response.json()
 
-    def calculate_weighted_average(self, prices: Dict[str, float]) -> Optional[float]:
+            # Extract prices (CoinGecko returns data points at varying intervals)
+            if "prices" not in data or not data["prices"]:
+                logger.warning(f"No historical data from CoinGecko for {symbol} in the specified range.")
+                return []
+
+            trades = []
+            for price_point in data["prices"]:
+                timestamp_ms = price_point[0]  # Timestamp in milliseconds
+                price = price_point[1]  # Price in USD
+                trade_time = datetime.fromtimestamp(timestamp_ms / 1000, tz=pytz.UTC)
+                if trade_time < start_time or trade_time > end_time:
+                    continue
+                trades.append({
+                    "trade_id": f"coingecko_{timestamp_ms}",  # Synthetic trade ID
+                    "price": float(price),
+                    "timestamp": trade_time
+                })
+
+            return trades
+
+        except Exception as e:
+            logger.error(f"Error fetching CoinGecko historical trades: {e}")
+            return []
+
+    def calculate_weighted_average(self, prices):
         """Calculate the weighted average price from all sources."""
         if not prices:
             return None
         total_weight = 0
         weighted_sum = 0
         for source_name, price in prices.items():
-            _, weight = self.sources[source_name]
-            weighted_sum += price * weight
-            total_weight += weight
+            if source_name in self.weights:
+                weight = self.weights[source_name]
+                weighted_sum += price * weight
+                total_weight += weight
         return weighted_sum / total_weight if total_weight > 0 else None
 
-    def fill_missed_data(self, symbol: str, start_time: datetime, end_time: datetime):
-        """Fill missed data for the given time range by fetching historical data."""
-        logger.info(f"Filling missed data for {symbol} from {start_time} to {end_time}...")
-        start_date = start_time.strftime("%Y-%m-%d %H:%M:%S")
-        end_date = end_time.strftime("%Y-%m-%d %H:%M:%S")
+    def process_csv_files(self):
+        """Process individual CSV files, calculate weighted averages per second, and write to final CSV."""
+        logger.info("Processing CSV files to calculate weighted averages per second...")
 
-        historical_data = self.fetch_historical_prices(symbol, start_date, end_date)
-        logger.info(f"Historical data fetched: {historical_data}")
+        # Get the local timezone
+        local_tz = datetime.now().astimezone().tzinfo
 
-        existing_entries = self.db.get_live_prices_in_range(symbol, start_time, end_time)
-        logger.info(f"Existing entries in range: {existing_entries}")
-
-        # Align the start time to the next 5-second interval
-        start_seconds = start_time.second
-        start_remainder = start_seconds % 5
-        if start_remainder != 0:
-            start_time = start_time + timedelta(seconds=(5 - start_remainder))
-        current_time = start_time
-
-        # Get the last known price before the gap as a fallback
-        last_known_price = None
-        if existing_entries:
-            last_timestamp = max(existing_entries.keys())
-            last_known_price = existing_entries[last_timestamp]
-        else:
-            # Fetch the most recent price before start_time
-            with sqlite3.connect(self.db.db_path) as conn:
-                cursor = conn.cursor()
-                cursor.execute(
-                    "SELECT price FROM live_prices WHERE symbol = ? AND timestamp < ? ORDER BY timestamp DESC LIMIT 1",
-                    (symbol, start_date)
-                )
-                result = cursor.fetchone()
-                if result:
-                    last_known_price = result[0]
-
-        while current_time < end_time:  # Stop before the end_time to avoid duplicating the reconnection entry
-            current_time_str = current_time.strftime("%Y-%m-%d %H:%M:%S")
-            
-            if current_time_str in existing_entries:
-                logger.info(f"Skipping {current_time_str} - entry already exists: {existing_entries[current_time_str]}")
-                current_time += timedelta(seconds=5)
-                continue
-
-            historical_prices = {}
-            for source_name, prices in historical_data.items():
-                closest_price = None
-                closest_time_diff = float('inf')
-                for timestamp, price in prices.items():
-                    ts = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
-                    time_diff = abs((ts - current_time).total_seconds())
-                    if time_diff < closest_time_diff:
-                        closest_time_diff = time_diff
-                        closest_price = price
-                if closest_price is not None:
-                    historical_prices[source_name] = closest_price
-
-            weighted_avg = self.calculate_weighted_average(historical_prices)
-            logger.info(f"Calculated weighted average for {current_time_str}: {weighted_avg}")
-
-            if weighted_avg is not None:
-                last_price = last_known_price if last_known_price is not None else weighted_avg
-                if abs(weighted_avg - last_price) > 50:
-                    logger.warning(f"Outlier detected for {symbol} at {current_time_str}: {weighted_avg}. Using last known price: {last_price}")
-                    weighted_avg = last_price
-
-                self.db.save_live_price(symbol, weighted_avg, current_time)
-                logger.info(f"Filled data for {symbol} at {current_time_str}: {weighted_avg}")
-                last_known_price = weighted_avg
-            else:
-                if last_known_price is not None:
-                    logger.info(f"No historical data available to fill {symbol} at {current_time_str}. Using last known price: {last_known_price}")
-                    self.db.save_live_price(symbol, last_known_price, current_time)
-                    logger.info(f"Filled data for {symbol} at {current_time_str}: {last_known_price}")
+        # Read all CSV files into DataFrames
+        dfs = {}
+        for source, file_path in self.csv_files.items():
+            try:
+                df = pd.read_csv(file_path)
+                if not df.empty:
+                    # Parse timestamps and make them timezone-aware in the local timezone
+                    df['timestamp'] = pd.to_datetime(df['timestamp']).dt.tz_localize(local_tz)
+                    dfs[source] = df.set_index('timestamp')
                 else:
-                    logger.warning(f"No historical data or last known price available to fill {symbol} at {current_time_str}")
+                    dfs[source] = pd.DataFrame(columns=['price'], index=pd.DatetimeIndex([]))
+                    logger.warning(f"{source} CSV is empty.")
+            except FileNotFoundError:
+                logger.warning(f"CSV file not found for {source}: {file_path}")
+                dfs[source] = pd.DataFrame(columns=['price'], index=pd.DatetimeIndex([]))
+            except Exception as e:
+                logger.error(f"Error reading CSV file for {source}: {e}")
+                dfs[source] = pd.DataFrame(columns=['price'], index=pd.DatetimeIndex([]))
 
-            current_time += timedelta(seconds=5)
-
-    def track_live_prices(self, symbol: str, interval: int = 5):
-        """Continuously track live prices at the specified interval (in seconds)."""
-        logger.info(f"Starting real-time price tracking for {symbol} (interval: {interval} seconds)...")
-        
-        # Align the start time to the nearest 5-second interval
-        start_time = datetime.now()
-        seconds = start_time.second
-        remainder = seconds % interval
-        if remainder != 0:
-            time.sleep(interval - remainder)
-            start_time = datetime.now().replace(microsecond=0)
-        
-        next_fetch_time = start_time
-
-        while True:
-            current_time = datetime.now()
-            if current_time < next_fetch_time:
-                time.sleep((next_fetch_time - current_time).total_seconds())
-                continue
-
-            fetch_start_time = next_fetch_time  # Use the scheduled fetch time
-            logger.info(f"Attempting to fetch prices at {fetch_start_time}...")
-            prices = self.fetch_live_prices(symbol, fetch_start_time)
-
-            if not prices:
-                logger.warning(f"Disconnection detected at {fetch_start_time} - all sources failed.")
-                disconnect_time = fetch_start_time
-
-                while True:
-                    try:
-                        reconnect_time = datetime.now()
-                        test_prices = self.fetch_live_prices(symbol, fetch_start_time)
-                        if test_prices:
-                            logger.info(f"Connection restored at {reconnect_time}.")
-                            break
-                    except Exception as e:
-                        logger.error(f"Connection still down: {e}")
-                        time.sleep(1)
-
-                if self.last_fetch_time:
-                    # Calculate the correct time range for filling missed data
-                    # Start from the last successful fetch time
-                    start_fill_time = self.last_fetch_time
-                    # End at the next scheduled fetch time after reconnection
-                    reconnect_fetch_time = disconnect_time
-                    while reconnect_fetch_time <= reconnect_time:
-                        reconnect_fetch_time += timedelta(seconds=interval)
-                    logger.info(f"Filling missed data from {start_fill_time} to {reconnect_fetch_time}...")
-                    self.fill_missed_data(symbol, start_fill_time, reconnect_fetch_time)
-                else:
-                    logger.warning("No previous fetch time available; cannot fill missed data.")
-
-                self.last_fetch_time = reconnect_fetch_time - timedelta(seconds=interval)
-                prices = test_prices
-
-                next_fetch_time = reconnect_fetch_time
-            else:
-                next_fetch_time += timedelta(seconds=interval)
-
-            weighted_avg = self.calculate_weighted_average(prices)
-            data = []
-            for source, price in prices.items():
-                data.append([source, symbol, f"{price:.2f}"])
-            if weighted_avg is not None:
-                data.append(["Weighted Avg", symbol, f"{weighted_avg:.2f}"])
-
-            df = pd.DataFrame(data, columns=["Source", "Symbol", "Price (USD)"])
-            logger.info(f"\nLive Prices at {fetch_start_time.strftime('%Y-%m-%d %H:%M:%S')}:")
-            logger.info(df.to_string(index=False))
-
-    def display_live_prices(self, symbol: str, use_db: bool = False):
-        """Fetch and display live prices in a table."""
-        if use_db:
-            prices = self.db.get_live_prices(symbol)
-            if prices:
-                weighted_avg = prices["Weighted Avg"]
-                data = [["Weighted Avg", symbol, f"{weighted_avg:.2f}"]]
-            else:
-                logger.warning("No data found in the database for this symbol.")
-                return
-        else:
-            prices = self.fetch_live_prices(symbol)
-            weighted_avg = self.calculate_weighted_average(prices)
-
-            data = []
-            for source, price in prices.items():
-                data.append([source, symbol, f"{price:.2f}"])
-            if weighted_avg is not None:
-                data.append(["Weighted Avg", symbol, f"{weighted_avg:.2f}"])
-
-        df = pd.DataFrame(data, columns=["Source", "Symbol", "Price (USD)"])
-        logger.info("\nLive Prices:")
-        logger.info(df.to_string(index=False))
-
-    def display_historical_prices(self, symbol: str, start_date: str, end_date: str, use_db: bool = False):
-        """Fetch and display historical prices in a table."""
-        if use_db:
-            historical_data = self.db.get_historical_prices(symbol, start_date, end_date)
-        else:
-            historical_data = self.fetch_historical_prices(symbol, start_date, end_date)
-
-        if not historical_data:
-            logger.warning("No historical data available.")
+        # Find the union of all timestamps
+        all_timestamps = pd.concat([df.reset_index()['timestamp'] for df in dfs.values()], ignore_index=True).drop_duplicates().sort_values()
+        if all_timestamps.empty:
+            logger.warning("No timestamps found in CSV files.")
             return
 
-        all_dates = set()
-        for prices in historical_data.values():
-            all_dates.update(prices.keys())
-        all_dates = sorted(all_dates)
+        # Resample to per-second intervals and calculate weighted averages
+        for source, df in dfs.items():
+            if not df.empty:
+                # Resample to per-second intervals, taking the last price in each second
+                df_resampled = df.resample('s').last().ffill()
+                dfs[source] = df_resampled
 
-        data = []
-        for date in all_dates:
-            row = [date]
-            for source_name in historical_data:
-                price = historical_data[source_name].get(date, "N/A")
-                row.append(f"{price:.2f}" if isinstance(price, (int, float)) else price)
-            data.append(row)
+        # Align timestamps across all sources
+        start_time = min(df.index.min() for df in dfs.values() if not df.empty)
+        end_time = max(df.index.max() for df in dfs.values() if not df.empty)
+        if not start_time or not end_time:
+            logger.warning("No valid time range found in CSV files.")
+            return
 
-        columns = ["Date"] + list(historical_data.keys())
-        df = pd.DataFrame(data, columns=columns)
-        logger.info(f"\nHistorical Prices for {symbol} ({start_date} to {end_date}):")
-        logger.info(df.to_string(index=False))
+        # Generate per-second timestamps in the local timezone
+        time_range = pd.date_range(start=start_time.floor('s'), end=end_time.floor('s'), freq='s', tz=local_tz)
+        try:
+            with open(self.final_csv, mode='w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(["timestamp", "weighted_avg"])  # Rewrite header
+
+                for timestamp in time_range:
+                    prices = {}
+                    for source, df in dfs.items():
+                        if timestamp in df.index:
+                            prices[source] = df.loc[timestamp, 'price']
+                        else:
+                            # Find the most recent price before this timestamp
+                            past_data = df[df.index < timestamp]
+                            if not past_data.empty:
+                                prices[source] = past_data.iloc[-1]['price']
+
+                    weighted_avg = self.calculate_weighted_average(prices)
+                    if weighted_avg is not None:
+                        # Timestamp is already in local timezone
+                        timestamp_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+                        writer.writerow([timestamp_str, weighted_avg])
+                        logger.debug(f"Calculated weighted average for {timestamp_str}: {weighted_avg}")
+                f.flush()  # Ensure data is written to disk
+        except Exception as e:
+            logger.error(f"Error writing to final CSV file {self.final_csv}: {e}")
+            return
+
+        logger.info(f"Finished processing CSV files and writing to {self.final_csv}.")
+
+        # Store the CSV data in SQLite database
+        db_path = "crypto_prices.db"  # Store in project root directory
+        conn = None
+        try:
+            # Connect to SQLite database
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            logger.info(f"Connected to SQLite database at {db_path}")
+
+            # Create the weighted_avg_prices table if it doesn't exist
+            create_table_query = """
+            CREATE TABLE IF NOT EXISTS weighted_avg_prices (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp TEXT NOT NULL,
+                weighted_avg REAL NOT NULL
+            );
+            """
+            cursor.execute(create_table_query)
+            conn.commit()
+            logger.info("Table 'weighted_avg_prices' created or already exists.")
+
+            # Read the CSV file into a DataFrame
+            df = pd.read_csv(self.final_csv)
+            logger.info(f"Read {len(df)} rows from {self.final_csv}")
+
+            # Insert each row into the database
+            insert_query = """
+            INSERT INTO weighted_avg_prices (timestamp, weighted_avg)
+            VALUES (?, ?)
+            """
+            for _, row in df.iterrows():
+                cursor.execute(insert_query, (
+                    row['timestamp'],
+                    row['weighted_avg']
+                ))
+            conn.commit()
+            logger.info(f"Stored {len(df)} rows in the database.")
+
+        except (pd.errors.EmptyDataError, KeyError, sqlite3.Error) as e:
+            logger.error(f"Error storing CSV data to database: {e}")
+        finally:
+            if conn:
+                conn.close()
+                logger.info("Database connection closed.")
+
+    def query_weighted_avg_prices(self, start_date, end_date):
+        """Query the weighted average prices from the SQLite database within the specified date range."""
+        logger.info(f"Querying weighted average prices from {start_date} to {end_date}...")
+
+        # Parse start and end dates
+        try:
+            start_time = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
+            end_time = datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
+        except ValueError as e:
+            logger.error(f"Invalid date format. Use 'YYYY-MM-DD HH:MM:SS'. Error: {e}")
+            return []
+
+        # Validate time range
+        if start_time >= end_time:
+            logger.error("Start date must be before end date.")
+            return []
+
+        db_path = "crypto_prices.db"
+        conn = None
+        results = []
+        try:
+            # Connect to SQLite database
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            logger.info(f"Connected to SQLite database at {db_path}")
+
+            # Query the database
+            query = """
+            SELECT timestamp, weighted_avg
+            FROM weighted_avg_prices
+            WHERE timestamp >= ? AND timestamp <= ?
+            ORDER BY timestamp
+            """
+            cursor.execute(query, (start_date, end_date))
+            rows = cursor.fetchall()
+
+            # Format the results
+            for row in rows:
+                results.append({
+                    "timestamp": row[0],
+                    "weighted_avg": row[1]
+                })
+
+            logger.info(f"Retrieved {len(results)} rows from the database.")
+
+        except sqlite3.Error as e:
+            logger.error(f"Error querying database: {e}")
+        finally:
+            if conn:
+                conn.close()
+                logger.info("Database connection closed.")
+
+        return results
+
+    def display_historical_data(self, symbol, start_date, end_date, sources=None):
+        """Fetch and display historical weighted average data for the specified time range."""
+        logger.info(f"Fetching historical data for {symbol} from {start_date} to {end_date}...")
+
+        # Parse start and end dates as UTC (since API timestamps are in UTC)
+        try:
+            start_time = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.UTC)
+            end_time = datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.UTC)
+        except ValueError as e:
+            logger.error(f"Invalid date format. Use 'YYYY-MM-DD HH:MM:SS'. Error: {e}")
+            return
+
+        # Validate time range
+        if start_time >= end_time:
+            logger.error("Start date must be before end date.")
+            return
+
+        # Determine sources
+        if sources is None:
+            sources = ["Binance", "Coinbase", "CoinGecko"]
+        else:
+            valid_sources = ["Binance", "Coinbase", "CoinGecko"]
+            for source in sources:
+                if source not in valid_sources:
+                    logger.error(f"Invalid source: {source}. Valid sources are {valid_sources}")
+                    return
+
+        # Fetch historical data
+        historical_data = {}
+        for source in sources:
+            if source == "Binance":
+                trades = self.ws_client._fetch_binance_historical_trades(symbol, start_time, end_time)
+            elif source == "Coinbase":
+                trades = self.ws_client._fetch_coinbase_historical_trades(start_time, end_time)
+            elif source == "CoinGecko":
+                trades = self._fetch_coingecko_historical_trades(symbol, start_time, end_time)
+            else:
+                continue
+
+            # Convert trades to DataFrame
+            if trades:
+                df = pd.DataFrame(trades, columns=["timestamp", "price", "trade_id"])
+                df = df[["timestamp", "price"]].set_index("timestamp")
+                historical_data[source] = df
+            else:
+                historical_data[source] = pd.DataFrame(columns=['price'], index=pd.DatetimeIndex([]))
+                logger.warning(f"No historical data fetched for {source}.")
+
+        # If no data was fetched, exit
+        if not any(df.shape[0] > 0 for df in historical_data.values()):
+            logger.warning("No historical data available for the specified time range.")
+            return
+
+        # Resample to per-second intervals
+        local_tz = datetime.now().astimezone().tzinfo
+        for source, df in historical_data.items():
+            if not df.empty:
+                # Convert UTC timestamps to local timezone
+                df.index = df.index.tz_convert(local_tz)
+                df_resampled = df.resample('s').last().ffill()
+                historical_data[source] = df_resampled
+
+        # Align timestamps across all sources
+        start_time_local = start_time.astimezone(local_tz)
+        end_time_local = end_time.astimezone(local_tz)
+        time_range = pd.date_range(start=start_time_local.floor('s'), end=end_time_local.floor('s'), freq='s', tz=local_tz)
+
+        # Calculate and display weighted averages
+        print("\nHistorical Weighted Average Prices:")
+        print("-----------------------------------")
+        print("Timestamp".ljust(20), "Weighted Average Price")
+        print("-----------------------------------")
+        for timestamp in time_range:
+            prices = {}
+            for source, df in historical_data.items():
+                if timestamp in df.index:
+                    prices[source] = df.loc[timestamp, 'price']
+                else:
+                    # Find the most recent price before this timestamp
+                    past_data = df[df.index < timestamp]
+                    if not past_data.empty:
+                        prices[source] = past_data.iloc[-1]['price']
+
+            weighted_avg = self.calculate_weighted_average(prices)
+            if weighted_avg is not None:
+                timestamp_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+                print(f"{timestamp_str.ljust(20)} {weighted_avg:.2f}")
+
+        logger.info("Finished displaying historical data.")
+
+    def track_live_prices(self, symbol, sources=None):
+        """Continuously track live prices using WebSocket and store in CSV files."""
+        logger.info(f"Starting real-time price tracking for {symbol} with sources: {sources if sources else 'all'}...")
+
+        def on_price_update(symbol, prices, fetch_time):
+            # No action needed; data is already written to CSV by WebSocketClient
+            pass
+
+        def on_disconnect(source):
+            """Handle disconnection events from WebSocketClient."""
+            logger.warning(f"Disconnection detected for {source}. Data will be missing in CSV until reconnection.")
+
+        self.ws_client = WebSocketClient(on_price_update, on_disconnect)
+        self.ws_client.start(symbol, sources=sources)
+
+        try:
+            while True:
+                time.sleep(1)  # Keep the main thread alive
+        except KeyboardInterrupt:
+            logger.info("Stopping WebSocket connections...")
+            self.ws_client.stop()
+            logger.info("Generating final weighted average CSV file...")
+            self.process_csv_files()

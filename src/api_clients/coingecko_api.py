@@ -1,46 +1,37 @@
+# src/price_engine/data_sources/coingecko_api.py
 import requests
-from datetime import datetime, timedelta
-from typing import Optional, Dict
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from datetime import datetime
 
 class CoinGeckoAPI:
     def __init__(self):
         self.base_url = "https://api.coingecko.com/api/v3"
 
-    def _map_symbol(self, symbol: str) -> str:
-        """Map symbols to CoinGecko IDs (e.g., BTCUSDT -> bitcoin)."""
-        symbol_map = {
-            "BTCUSDT": "bitcoin",
-            "ETHUSDT": "ethereum",
-            "SOLUSDT": "solana",
-        }
-        return symbol_map.get(symbol, symbol)
-
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=1, max=10),
-        retry=retry_if_exception_type((requests.exceptions.RequestException,)),
-        reraise=True
-    )
-    def get_price(self, symbol: str) -> Optional[float]:
-        """Fetch the current price for a symbol from CoinGecko."""
-        coingecko_id = self._map_symbol(symbol)
+    def get_price(self, coin_id: str, vs_currency: str = "usd") -> float:
         url = f"{self.base_url}/simple/price"
-        params = {
-            "ids": coingecko_id,
-            "vs_currencies": "usd",
-        }
-        try:
-            response = requests.get(url, params=params, timeout=5)
-            response.raise_for_status()
+        params = {"ids": coin_id, "vs_currencies": vs_currency}
+        response = requests.get(url, params=params)
+        if response.status_code == 200:
             data = response.json()
-            return float(data[coingecko_id]["usd"])
-        except (requests.RequestException, KeyError, ValueError) as e:
-            print(f"Failed to fetch price from CoinGecko for {symbol}: {e}")
-            return None
+            if coin_id in data and vs_currency in data[coin_id]:
+                return float(data[coin_id][vs_currency])
+            else:
+                raise Exception(f"Invalid coin ID or currency: {coin_id}, {vs_currency}")
+        else:
+            raise Exception(f"Failed to fetch price from CoinGecko: {response.text}")
 
-    def get_historical_price(self, symbol: str, start_date: str, end_date: str) -> Optional[Dict[str, float]]:
-        """Fetch historical prices for a symbol from CoinGecko."""
-        # CoinGecko's historical API is daily and not suitable for minute-level data
-        print(f"Historical data fetching from CoinGecko is not supported for minute-level granularity for {symbol}.")
-        return None
+    def get_historical_price(self, coin_id: str, date: str, vs_currency: str = "usd") -> float:
+        """
+        Fetch historical price for a specific date.
+        Date format: dd-mm-yyyy
+        """
+        url = f"{self.base_url}/coins/{coin_id}/history"
+        params = {"date": date, "localization": "false"}
+        response = requests.get(url, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            if "market_data" in data:
+                return float(data["market_data"]["current_price"][vs_currency])
+            else:
+                raise Exception(f"No market data found for {coin_id} on {date}")
+        else:
+            raise Exception(f"Failed to fetch historical price from CoinGecko: {response.text}")
